@@ -5,11 +5,13 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import Sidebar from '@/Components/Sidebar';
-import { Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, Bell, MessageSquare } from 'lucide-react';
 
 export default function Authenticated({ header, children }) {
     const user = usePage().props.auth.user;
     const [showingSidebar, setShowingSidebar] = useState(false);
+    const [notificationCount, setNotificationCount] = useState(3); // Example count
+    const [messageCount, setMessageCount] = useState(2); // Example count
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -25,6 +27,30 @@ export default function Authenticated({ header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
+                            {/* Notifications */}
+                            <div className="relative mr-3">
+                                <button className="relative p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500">
+                                    <Bell className="w-6 h-6" />
+                                    {notificationCount > 0 && (
+                                        <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
+                                            {notificationCount}
+                                        </span>
+                                    )}
+                                </button>
+                            </div>
+
+                            {/* Messages */}
+                            <div className="relative mr-3">
+                                <button className="relative p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500">
+                                    <MessageSquare className="w-6 h-6" />
+                                    {messageCount > 0 && (
+                                        <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-blue-500 rounded-full">
+                                            {messageCount}
+                                        </span>
+                                    )}
+                                </button>
+                            </div>
+
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -55,7 +81,7 @@ export default function Authenticated({ header, children }) {
                                             Profile
                                         </Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
+                                            Déconnexion
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
