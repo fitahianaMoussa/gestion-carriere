@@ -20,6 +20,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'matricule',
+        'telephone',
+        'date_embauche',
+        'adresse',
+        'genre',
+        'role',
+        'status',
     ];
 
     /**
@@ -44,4 +51,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+     // Vérifier si un utilisateur a un rôle RH
+     public function isRh()
+     {
+         return $this->role === 'RH';
+     }
+ 
+     // Définit le rôle employé par défaut
+     public static function boot()
+     {
+         parent::boot();
+ 
+         static::creating(function ($user) {
+             if (!$user->role) {
+                 $user->role = 'employe';
+             }
+         });
+     }
 }

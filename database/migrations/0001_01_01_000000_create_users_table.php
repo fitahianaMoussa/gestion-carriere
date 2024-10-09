@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('matricule');
+            $table->string('telephone');
+            $table->date('date_embauche');
+            $table->string('adresse');
+            $table->string('genre');
+            $table->enum('role',['admin','RH','employe'])->default('employe');
+            $table->enum('status',['active','retraite','demissionaire'])->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
