@@ -4,19 +4,28 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Home, Settings, HelpCircle, LogOut, Users, TrendingUp, Briefcase, FileText, Shuffle, Archive, Layers, Building2, LineChart, ListChecks, ChevronLeft, ChevronRight } from 'lucide-react';
-import { NavLink } from '@inertiajs/react';
+import NavLink from './NavLink';
+
 
 const Sidebar = ({ className, user }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
-  const SidebarItem = ({ icon: Icon, children, ...props }) => {
+  const SidebarItem = ({ icon: Icon, children, href }) => {
     return (
-      <Button variant="ghost" className={cn("justify-start w-full", isCollapsed ? "px-2" : "px-4")} {...props}>
+      <NavLink
+        href={href}
+        className={({ isActive }) =>
+          cn("flex items-center justify-start w-full p-2 text-sm font-medium rounded-md",
+            isCollapsed ? "px-2" : "px-4",
+            isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200 text-gray-700"
+          )
+        }
+      >
         <Icon className="w-4 h-4 mr-2" />
         {!isCollapsed && children}
-      </Button>
+      </NavLink>
     );
   };
 
@@ -48,8 +57,8 @@ const Sidebar = ({ className, user }) => {
           <div className="px-3 py-2">
             {!isCollapsed && <h2 className="px-4 mb-2 text-lg font-semibold tracking-tight">Menu</h2>}
             <div className="space-y-1">
-              <SidebarItem icon={Home}>Home</SidebarItem>
-              <SidebarItem icon={Settings}>Settings</SidebarItem>
+              <SidebarItem icon={Home} href="/dashboard">Home</SidebarItem>
+              <SidebarItem icon={Settings} href="/settings">Settings</SidebarItem>
             </div>
           </div>
 
@@ -57,16 +66,16 @@ const Sidebar = ({ className, user }) => {
           <div className="px-3 py-2">
             {!isCollapsed && <h2 className="px-4 mb-2 text-lg font-semibold tracking-tight">Gestion de Carrière</h2>}
             <div className="space-y-1">
-              <SidebarItem icon={Users}>Employés</SidebarItem>
-              <SidebarItem icon={TrendingUp}>Avancement</SidebarItem>
-              <SidebarItem icon={Briefcase}>Service</SidebarItem>
-              <SidebarItem icon={Shuffle}>Reclassement</SidebarItem>
-              <SidebarItem icon={FileText}>Contrats</SidebarItem>
-              <SidebarItem icon={Archive}>Retraites</SidebarItem>
-              <SidebarItem icon={Layers}>Classes</SidebarItem>
-              <SidebarItem icon={ListChecks}>Postes</SidebarItem>
-              <SidebarItem icon={LineChart}>Échelons</SidebarItem>
-              <SidebarItem icon={Building2}>Départements</SidebarItem>
+              <SidebarItem icon={Users} href="/users">Employés</SidebarItem>
+              <SidebarItem icon={TrendingUp} href="/promotions">Avancement</SidebarItem>
+              <SidebarItem icon={Briefcase} href="/services">Service</SidebarItem>
+              <SidebarItem icon={Shuffle} href="/reclassements">Reclassement</SidebarItem>
+              <SidebarItem icon={FileText} href="/contrats">Contrats</SidebarItem>
+              <SidebarItem icon={Archive} href="/retraites">Retraites</SidebarItem>
+              <SidebarItem icon={Layers} href="/classes">Classes</SidebarItem>
+              <SidebarItem icon={ListChecks} href="/postes">Postes</SidebarItem>
+              <SidebarItem icon={LineChart} href="/echelons">Échelons</SidebarItem>
+              <SidebarItem icon={Building2} href="/departements">Départements</SidebarItem>
             </div>
           </div>
 
@@ -74,14 +83,14 @@ const Sidebar = ({ className, user }) => {
           <div className="px-3 py-2">
             {!isCollapsed && <h2 className="px-4 mb-2 text-lg font-semibold tracking-tight">Help</h2>}
             <div className="space-y-1">
-              <SidebarItem icon={HelpCircle}>FAQ</SidebarItem>
+              <SidebarItem icon={HelpCircle} href="/faq">FAQ</SidebarItem>
             </div>
           </div>
         </div>
 
         {/* Déconnexion */}
         <div className="px-3 py-2 mt-auto">
-          <SidebarItem icon={LogOut} className="text-red-500 hover:text-red-600 hover:bg-red-100">
+          <SidebarItem icon={LogOut} href="/logout" className="text-red-500 hover:text-red-600 hover:bg-red-100">
             Log out
           </SidebarItem>
         </div>

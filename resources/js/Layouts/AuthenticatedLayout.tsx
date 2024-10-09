@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import Sidebar from '@/Components/Sidebar';
-import { LogOut, Menu, X, Bell, MessageSquare } from 'lucide-react';
+import React, { useState } from "react";
+import { Link, usePage } from "@inertiajs/react";
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import Dropdown from "@/Components/Dropdown";
+import NavLink from "@/Components/NavLink";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import Sidebar from "@/Components/Sidebar";
+import { LogOut, Menu, X, Bell, MessageSquare } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Authenticated({ header, children }) {
     const user = usePage().props.auth.user;
@@ -59,7 +60,15 @@ export default function Authenticated({ header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none"
                                             >
-                                                {user.name}
+                                                <Avatar>
+                                                    <AvatarImage
+                                                        src={user.avatar}
+                                                        alt={user.name}
+                                                    />
+                                                    <AvatarFallback>
+                                                        {user.name.charAt(0)}
+                                                    </AvatarFallback>
+                                                </Avatar>
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -77,10 +86,16 @@ export default function Authenticated({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>
+                                        <Dropdown.Link
+                                            href={route("profile.edit")}
+                                        >
                                             Profile
                                         </Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        <Dropdown.Link
+                                            href={route("logout")}
+                                            method="post"
+                                            as="button"
+                                        >
                                             Déconnexion
                                         </Dropdown.Link>
                                     </Dropdown.Content>
@@ -90,7 +105,11 @@ export default function Authenticated({ header, children }) {
 
                         <div className="flex items-center -me-2 sm:hidden">
                             <button
-                                onClick={() => setShowingSidebar((previousState) => !previousState)}
+                                onClick={() =>
+                                    setShowingSidebar(
+                                        (previousState) => !previousState
+                                    )
+                                }
                                 className="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
                             >
                                 {showingSidebar ? (
@@ -105,11 +124,13 @@ export default function Authenticated({ header, children }) {
             </nav>
 
             <div className="flex h-screen overflow-hidden">
-                <Sidebar 
-                    className={`${showingSidebar ? 'block' : 'hidden'} sm:block flex-shrink-0 border-r border-gray-200 bg-white`} 
+                <Sidebar
+                    className={`${
+                        showingSidebar ? "block" : "hidden"
+                    } sm:block flex-shrink-0 border-r border-gray-200 bg-white`}
                     user={user}
                 />
-                
+
                 <div className="flex-1 overflow-auto">
                     {header && (
                         <header className="bg-white shadow">

@@ -21,5 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+       
+            $this->app['router']->middleware('isRH', \App\Http\Middleware\IsHR::class);
+       
     }
 }
